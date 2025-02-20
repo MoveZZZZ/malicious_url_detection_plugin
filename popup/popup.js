@@ -80,7 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
         let url = tabs[0].url;
         document.getElementById("url-container").innerText = url;
     });
-
     copyBtn.addEventListener("click", () => {
         status.innerHTML = ""
         navigator.clipboard.writeText(urlContainer.innerText).then(() => {
