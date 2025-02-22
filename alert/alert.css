@@ -1,0 +1,317 @@
+.plugin-alert-container {
+    font-family: 'Courier New', monospace;
+    background: black;
+    color: #00ff00;
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #00ff00;
+    box-shadow: 0 0 300px #00ff00;
+    width: 380px;
+    height: 400px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999999;
+}
+.scream_image_bg {
+    position: relative;
+    background-image: url("../assets/scream.png");
+    background-position: 0% 0%;
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0 0 10px red) drop-shadow(0 0 50px red);
+    width: 100%;
+    height: 100%;
+}
+@media (max-width: 1200px) {
+    .scream_image_bg {
+        background-position: -70% 0%;
+        background-size: auto 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .scream_image_bg {
+        background-position: -50% 0%;
+    }
+}
+
+@media (max-width: 600px) {
+    .scream_image_bg {
+        background-position: 30% 0%;
+    }
+}
+@media (max-width: 420px) {
+    .scream_image_bg {
+        background-position: 30% 0%;
+    }
+}
+.scream_image_bg::before,
+.scream_image_bg::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: inherit;
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+
+.scream_image_bg::before {
+    animation: glitch-top 1.5s infinite linear alternate-reverse;
+}
+
+.scream_image_bg::after {
+    animation: glitch-bottom 1.5s infinite linear alternate-reverse;
+}
+@keyframes glitch-top {
+    0% {
+        clip-path: inset(0% 0 0% 0);
+        transform: translate(0, 0);
+    }
+    20% {
+        clip-path: inset(5% 0 90% 0);
+        transform: translate(-5px, -5px);
+    }
+    40% {
+        clip-path: inset(0% 0 0% 0);
+        transform: translate(5px, 5px);
+    }
+    60% {
+        clip-path: inset(10% 0 80% 0);
+        transform: translate(-5px, -5px);
+    }
+    80% {
+        clip-path: inset(0% 0 0% 0);
+        transform: translate(5px, 5px);
+    }
+    100% {
+        clip-path: inset(5% 0 90% 0);
+        transform: translate(0, 0);
+    }
+}
+
+@keyframes glitch-bottom {
+    0% {
+        clip-path: inset(0% 0 0% 0);
+        transform: translate(0, 0);
+    }
+    20% {
+        clip-path: inset(90% 0 5% 0);
+        transform: translate(5px, 5px);
+    }
+    40% {
+        clip-path: inset(0% 0 0% 0);
+        transform: translate(-5px, -5px);
+    }
+    60% {
+        clip-path: inset(80% 0 10% 0);
+        transform: translate(5px, 5px);
+    }
+    80% {
+        clip-path: inset(0% 0 0% 0);
+        transform: translate(-5px, -5px);
+    }
+    100% {
+        clip-path: inset(90% 0 5% 0);
+        transform: translate(0, 0);
+    }
+}
+
+.main-alert-text {
+    font-size: 27px;
+    margin-bottom: 10px;
+    animation: glitch 0.5s infinite alternate;
+    color: yellow;
+}
+
+@keyframes glitch {
+    0% { text-shadow: -2px 2px 0px #ff0000, 2px -2px 0px #0000ff; }
+    50% { text-shadow: 2px -2px 0px #ff0000, -2px 2px 0px #0000ff; }
+    100% { text-shadow: -2px 2px 0px #ff0000, 2px -2px 0px #0000ff; }
+}
+
+#message {
+    font-size: 21px;
+}
+
+.result-msg {
+    font-size: 21px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.status-defacement {
+    background: linear-gradient(270deg, #ffff66, #ffd700, #ffff66);
+    background-size: 600% 600%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient 2s ease infinite;
+}
+
+.status-phishing {
+    background: linear-gradient(270deg, #ffaa00, #8c5815, #ffc543);
+    background-size: 600% 600%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient 2s ease infinite;
+}
+
+.status-malware {
+    background: linear-gradient(270deg, #ff0000, #7e1414, #ff0a2f);
+    background-size: 600% 600%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient 2s ease infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+.plugin-button-alert {
+    padding: 10px;
+    background: red;
+    color: white;
+    cursor: pointer;
+    font-size: 17px;
+    margin: 5px;
+    width: 120px;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.plugin-button-alert:hover {
+    background: darkred;
+}
+
+.plugin-alert-button-container {
+    display: flex;
+    margin-top: 5px;
+}
+
+#continue-btn {
+    background: green;
+}
+
+#continue-btn:hover {
+    background: darkgreen;
+}
+
+.trust-container {
+    margin: 20px 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.plugin-alert-chck {
+    height: 19px;
+    width: 19px;
+}
+
+.plugin-alert-chk-box-descr {
+    display: flex;
+    flex-direction: column;
+    color: #00ff00;
+}
+
+.trust-container label {
+    color: #00ff00;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* Обёртка для чекбокса */
+.cyber-checkbox {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+
+/* Скрываем стандартный чекбокс */
+.cyber-checkbox input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    width: 0;
+    height: 0;
+}
+
+/* Квадратная «коробка» вместо стандартного */
+.cyber-checkbox .checkmark {
+    width: 22px;
+    height: 22px;
+    box-sizing: border-box;
+    background: #131313;                /* Тёмный фон внутри коробки */
+    border: 2px solid #00ff00;         /* Неоновая рамка */
+    border-radius: 3px;                /* Чуть скруглим углы */
+    transition: box-shadow 0.3s ease-in-out, background 0.3s;
+    position: relative;
+}
+
+/* Подсветка при наведении на чекбокс */
+.cyber-checkbox:hover .checkmark {
+    box-shadow: 0 0 8px #00ff00;
+}
+
+/* Когда чекбокс активен (checked), заполняем коробку */
+.cyber-checkbox input[type="checkbox"]:checked + .checkmark {
+    background: #00ff00;
+}
+
+/* Галочка (используем псевдоэлемент) */
+.cyber-checkbox .checkmark::after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Отображаем галочку, когда чекбокс включен */
+.cyber-checkbox input[type="checkbox"]:checked + .checkmark::after {
+    display: block;
+    left: 7px;
+    top: 2px;
+    width: 3px;
+    height: 10px;
+    border: solid #131313;       /* Цвет галочки (внутри заливки) */
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+
+/* Текст рядом с чекбоксом */
+.cyber-checkbox .label-text {
+    margin-left: 8px;
+    color: #00ff00;
+    letter-spacing: 1px;             /* Расстояние между буквами */
+    font-size: 14px;
+    text-transform: uppercase;       /* Капс */
+    transition: color 0.3s ease-in-out;
+}
+
+/* Подсветка текста при наведении */
+.cyber-checkbox:hover .label-text {
+    color: #00ff80;
+}
