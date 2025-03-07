@@ -3,11 +3,24 @@
   "name": "CyberSec URL Grabber",
   "version": "1.0",
   "description": "Gets the URL of the active tab",
-  "permissions": ["storage", "activeTab", "scripting", "tabs", "system.display"],
+
+  "permissions": [
+    "tabs",
+    "scripting",
+    "storage",
+    "activeTab",
+    "system.display"
+  ],
+
+  "host_permissions": [
+    "<all_urls>"
+  ],
+
   "background": {
     "service_worker": "background/background.js",
     "type": "module"
   },
+
   "action": {
     "default_popup": "popup/popup.html",
     "default_icon": {
@@ -16,9 +29,14 @@
       "128": "icons/icon128.png"
     }
   },
+
   "web_accessible_resources": [
     {
-      "resources": ["alert/alert.html"],
+      "resources": [
+        "alert/alert.css",
+        "alert/alert.js",
+        "assets/scream.png"
+      ],
       "matches": ["<all_urls>"]
     }
   ]

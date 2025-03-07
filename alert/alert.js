@@ -1,36 +1,39 @@
-document.addEventListener("DOMContentLoaded", () => {
+window.initAlertLogic = function initAlertLogic() {
+    const overlay = document.getElementById("extension-alert-overlay");
+    if (!overlay) {
+        console.error("No overlay found. Cannot attach alert logic.");
+        return;
+    }
+
+    const tabId   = parseInt(overlay.dataset.tabId, 10);
+    const message = overlay.dataset.message;
+
     const messageElement = document.getElementById("message");
-    const closeButton = document.getElementById("close-btn");
+    if (messageElement && message) {
+        messageElement.innerText = message;
+    }
+
+    const closeButton    = document.getElementById("close-btn");
     const continueButton = document.getElementById("continue-btn");
-    const trustCheckbox = document.getElementById("trust-domain");
+    const trustCheckbox  = document.getElementById("cyberCheck");
 
-    chrome.storage.local.get(["alertMessage", "alertTabId"], (data) => {
-        if (data.alertMessage) {
-            messageElement.innerText = data.alertMessage;
-        } else {
-            console.error("No alert message found!");
-        }
+    const domain = window.location.hostname;
 
-        if (data.alertTabId) {
-            chrome.tabs.get(data.alertTabId, (tab) => {
-                if (tab && tab.url) {
-                    let url = new URL(tab.url);
-                    let domain = url.hostname;
-                    const port = chrome.runtime.connect({ name: "alertPopup" });
-                    closeButton.addEventListener("click", () => {
-                        port.postMessage({ action: "closeAlert", tabId: data.alertTabId });
-                        window.close();
-                    });
+    const port = chrome.runtime.connect({ name: "alertPopup" });
 
-                    continueButton.addEventListener("click", () => {
-                        let trustDomain = trustCheckbox.checked ? domain : null;
-                        port.postMessage({ action: "continueBrowsing", domain: trustDomain });
-                        window.close();
-                    });
-                }
-            });
-        } else {
-            console.error("No tab ID found!");
-        }
+    closeButton.addEventListener("click", () => {
+        port.postMessage({
+            action: "closeAlert",
+            tabId: tabId
+        });
     });
-});
+
+    continueButton.addEventListener("click", () => {
+        const trustDomain = trustCheckbox.checked ? domain : null;
+        port.postMessage({
+            action: "continueBrowsing",
+            domain: trustDomain,
+            tabId: tabId
+        });
+    });
+};

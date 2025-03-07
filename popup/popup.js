@@ -80,7 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
         let url = tabs[0].url;
         document.getElementById("url-container").innerText = url;
     });
-
     copyBtn.addEventListener("click", () => {
         status.innerHTML = ""
         navigator.clipboard.writeText(urlContainer.innerText).then(() => {
@@ -103,8 +102,11 @@ document.addEventListener("DOMContentLoaded", () => {
         status.style.opacity = "1";
         status.style.color = "#00ff00";
         status.innerHTML = "🔄 Checking...";
+        checkBtn.disabled = true;
+        checkBtn.style.opacity = "0.5";
+
         try {
-            const response = await fetch("https://api.example.com/check", {
+            const response = await fetch("http://127.0.0.1:5000/api/data", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ url: url })
@@ -113,17 +115,34 @@ document.addEventListener("DOMContentLoaded", () => {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             const data = await response.json();
-            if (data.safe) {
-                status.innerHTML = `✅ URL is safe!`;
-                status.style.color = "#77dd77";
-            } else {
-                status.innerHTML = `⚠️ Warning! Suspicious URL.`;
-                status.style.color = "#ff5555";
+            switch (data.predicted_label) {
+                case "benign": {
+                    status.innerHTML = `<div class="result-msg">✅<span class="status-safe"> URL is safe! - Confidence: ${data.prediction_probs}%</span></div>`;
+                    break;
+                }
+                case "defacement": {
+                    status.innerHTML = `<div class="result-msg">⚠️<span class="status-defacement"> Warning! Suspicious URL! - Confidence: ${data.prediction_probs}%</span></div>`;
+                    break;
+                }
+                case "phishing": {
+                    status.innerHTML = `<div class="result-msg">🪝<span class="status-phishing"> Warning! URL is considered phishing! - Confidence: ${data.prediction_probs}%</span></div>`;
+                    break;
+                }
+                case "malware": {
+                    status.innerHTML = `<div class="result-msg">☠️<span class="status-malware malware"> Warning! URL is considered malware! - Confidence: ${data.prediction_probs}%</span></div>`;
+                    break;
+                }
             }
         } catch (error) {
             status.innerHTML = `❌ Error checking URL`;
             status.style.color = "#ff0000";
             console.error("API Error:", error);
+        }
+        finally {
+            setTimeout(() => {
+                checkBtn.disabled = false;
+                checkBtn.style.opacity = "1";
+            }, 1000);
         }
     });
 });
