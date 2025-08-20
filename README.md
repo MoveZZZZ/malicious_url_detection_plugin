@@ -97,6 +97,3 @@ malicious_url_detection_plugin-master/
 - Models integrated: RFC, XGB, LGBM, TabNet, DNN, GNN, Autoencoder, RBFN+RFC, BERT, Stacking  
 
 ---
-
-## 📜 License
-This project is released under the **MIT License**.  
